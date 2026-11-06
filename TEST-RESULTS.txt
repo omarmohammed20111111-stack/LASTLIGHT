@@ -1,0 +1,83 @@
+LASTLIGHT — RELEASE VERIFICATION
+================================
+
+40 checks passed.
+
+Environment
+Node.js 22.23.4, Linux; Playwright Chromium 158 with SwiftShader software WebGL.
+Desktop: standalone file:// and local HTTP. Touch: emulated 844x390 landscape.
+Network: actual WebSocket connections to the included local authoritative server.
+
+Simulation checks
+PASS  Deterministic map includes 14 enterable houses, supplies and 4 cars
+PASS  WASD movement, sprint and jump advance simulation
+PASS  Obstacle collision blocks movement without tunneling
+PASS  Authoritative hits consume ammo and damage armor / HP
+PASS  Walls block bullets and same-team shots do not deal damage
+PASS  Reload transfers reserve, weapon switching cancels reload
+PASS  Healing consumes medkit after 3 seconds, not instantly
+PASS  Supply pickup, grenade use, explosion damage and events
+PASS  Enter, accelerate and exit a vehicle
+PASS  Zone shrinks, damages outsiders and resolves winning team
+PASS  17 bots move, fight and finish a full zone-cycle simulation
+
+Browser acceptance checks
+PASS  Standalone file:// menu renders with WebGL
+PASS  No external asset or CDN requests
+PASS  Offline button starts 18-player simulation
+PASS  Actual keyboard input moves the local character
+PASS  Keyboard weapon selection changes to SMG
+PASS  Rendered game fires and consumes SMG ammunition
+PASS  Rendered game completes reload
+PASS  Keyboard jump produces vertical motion
+PASS  Keyboard grenade spawns projectile
+PASS  Grenade renders explosion event
+PASS  Custom key binding and weather settings apply
+PASS  Restart builds fresh state without errors
+PASS  Real browser clients create and join same private room
+PASS  Online starts with exactly two HUMAN players and zero bots
+PASS  Authoritative movement synchronizes between browser clients
+PASS  Online weapon switching and shots replicate to other client
+PASS  Disconnected human is eliminated server-side
+PASS  Touch device exposes mobile controls
+PASS  Emulated physical touch joystick moves the player
+PASS  Mobile AIM toggle and GUN button operate
+PASS  No uncaught browser JavaScript exceptions
+
+Multiplayer protocol checks
+PASS  Duo team-size limit enforced by authoritative server
+PASS  Four-player DUO launches as two teams of two
+PASS  DUO peers receive authoritative weapon, shots and grenade state
+PASS  Forged health and teleport fields are ignored
+PASS  Late join to active match is rejected
+PASS  Malformed JSON yields a handled error
+PASS  Public matchmaking joins real humans into the same squad room
+PASS  Public SQUAD match auto-starts after countdown, without bots
+
+Important test scope
+The offline browser interaction fixture temporarily holds AI inputs idle so that
+individual keyboard controls can be isolated without enemy fire. The separate
+full-match simulation test runs all 17 bots normally through the zone cycle.
+Browser tests use low graphics; screenshots document this tested setting.
+No uncaught browser exceptions occurred in the passing browser suite.
+These tests do not establish photorealism, AAA quality, production security,
+universal frame rates, public internet availability, or compatibility with every
+physical device. No public server has been deployed. No real phones were tested.
+The server is functional infrastructure, not an included ongoing hosting service.
+
+Reproduction
+npm install
+npm test                      # isolated simulation tests
+npm start                     # run in another terminal for network/browser tests
+node network-tests.js
+For the optional browser test harness only:
+npm install --no-save playwright
+npx playwright install chromium
+# On Linux, system browser dependencies may also be required.
+node browser-tests.js
+
+Authoritative simulation tests verify collision, hits, friendly fire, state and
+match outcomes. Live browser tests verify room creation, two-human solo play,
+movement/weapon/shot replication and disconnects. Protocol tests additionally
+verify four-human duos, team capacity and two-human squad public auto-start.
+Internet/TLS/LAN router configuration and audio perception need human field testing.

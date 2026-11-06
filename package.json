@@ -1,0 +1,13 @@
+{
+  "name": "lastlight-battle-royale",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Self-contained offline WebGL battle royale plus authoritative multiplayer server",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node tests.js"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}

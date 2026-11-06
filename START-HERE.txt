@@ -1,0 +1,108 @@
+LASTLIGHT — THE VALLEY REMAINS
+=================================
+A complete, playable independent battle royale prototype, not a commercial AAA game.
+
+OFFLINE — NO INSTALLATION OR INTERNET NEEDED
+Download LASTLIGHT.html, then double-click it or use your browser's Open File menu.
+Use a current Chrome, Edge, Firefox or Safari with WebGL and hardware acceleration.
+Click DEPLOY OFFLINE. Click the battlefield to capture the mouse if needed.
+The file embeds Three.js r160, all game code, generated materials and synthesized audio.
+No CDN, fonts, textures or asset downloads are required. Audio starts after interaction.
+If a browser blocks scripts in a downloaded preview, download the actual file and open it.
+Mobile operating systems may preview HTML instead of running it: use the server URL on those devices.
+
+CONTROLS
+WASD move | Shift sprint | Space jump | Mouse look | Left mouse fire
+Right mouse hold aim | R reload | 1 / 2 / 3 or wheel switch weapon
+E collect nearby supply / enter or exit vehicle | H medkit (3 seconds)
+G throw grenade (2.2 second fuse) | Esc menu | F8 settings
+Bindings and sensitivity are customizable and stored locally when permitted.
+Touchscreen: left joystick, drag right half to look, FIRE hold, AIM toggle,
+JUMP, LOAD, USE, MED, FRAG, GUN. Landscape strongly recommended.
+
+GAMEPLAY
+Offline: you and 17 labeled AI bots. Online: ONLY actual human connections.
+3 weapons: AR-41, VX-9 and M-14, each with its own magazine, spread, fire rate and reload.
+Armor absorbs 60% of incoming bullet damage until depleted. Headshots deal 1.8x damage.
+Equipment starts with 2 medkits, 2 grenades, 50 armor and weapon reserves.
+E picks up ammo (gold), medkits (mint), armor (blue) and grenades (orange).
+Nearby supply pickup takes priority over entering a vehicle.
+Four drivable Scout vehicles. WASD drive and steer, E exits if space is clear.
+Vehicles are transport only: no collisions with player damage, weapons or destruction.
+The circular zone waits 30 seconds then closes over 330 seconds; outside it, HP drains.
+Last surviving team wins. Friendly fire is disabled except your own grenades.
+Bots use line of sight, strafing, obstacle avoidance, retreat, reloads, healing,
+loot acquisition and zone awareness. They are heuristic AI, not advanced pathfinding.
+Offline minimap includes nearby enemies within 42m; online shows only teammates.
+No respawns or revives. Eliminated players can spectate.
+
+ONLINE SERVER — COMPLETE SOURCE INCLUDED
+1. Install Node.js 20 or newer from https://nodejs.org/ .
+2. Put LASTLIGHT.html, server.js and package.json in one directory.
+3. Open a terminal in that directory and run:
+   npm install
+   npm start
+4. Open http://localhost:8080 in a browser and select ONLINE OPERATIONS.
+5. CREATE ROOM, share the room code, then have a friend select JOIN.
+6. The room creator clicks START MATCH after two opposing human players arrive.
+   Solo: each human is a separate team.
+   Duo: select matching team numbers for partners (maximum 2 per team).
+   Squad: maximum 4 humans per team. At least two distinct teams required.
+   Auto assignment alternates between teams 1 and 2.
+   Team choice is made BEFORE creating/joining. Leave and rejoin to change it.
+7. FIND PUBLIC MATCH joins an available public room on this server, or creates one.
+   Public rooms auto-start 8 seconds after at least 2 humans arrive.
+   This is server-local matchmaking, not a global hosted player directory.
+   If no other humans are connected, it waits; it never inserts bots.
+Room capacity: 12 humans. No late joins to a started match. Disconnect means elimination.
+A finished match stays open to its participants; create/join a new room to play again.
+
+FRIENDS ON THE SAME WIFI
+Run the server on one computer. Find its LAN address (for example 192.168.1.25).
+Other players open http://192.168.1.25:8080 from the same Wi-Fi.
+Allow Node.js TCP port 8080 through the host firewall, on trusted private networks only.
+Do not use localhost on your friend's device: localhost always means THAT device.
+A downloaded HTML may also connect using ws://192.168.1.25:8080 as the server address.
+Some browsers restrict local/private network access from file://; if blocked, open the
+HTTP game page from the same server instead. Mobile HTTP play does not need pointer lock.
+
+FRIENDS OVER THE INTERNET
+This download does NOT include a publicly running server. Deploy the same files on
+an internet-accessible Node.js host with WebSocket support and HTTPS termination.
+Use a trusted TLS reverse proxy; public clients use https://YOUR_HOST and wss://YOUR_HOST.
+The proxy must forward WebSocket Upgrade/Connection headers to port 8080.
+PORT environment variable changes the internal listening port.
+Secure/tunnel-hosted pages must use wss://, not insecure ws:// (mixed-content blocking).
+LAN users can play directly over HTTP without a public deployment.
+Do not expose this prototype as a hardened public service without further work.
+
+NETWORK DESIGN AND LIMITATIONS
+The server runs the shared simulation at 30Hz and broadcasts snapshots at 15Hz.
+Movement, hits, ammunition, health, loot, vehicles and zone are server authoritative.
+The client sends bounded control inputs, not damage or teleport requests.
+Rendering interpolates snapshot movement. No client prediction, reconciliation,
+lag compensation, account system, persistence, encryption built into Node, or anti-cheat.
+Basic message limits, heartbeat and input validation exist; not production security.
+Rooms and state live in RAM; restarting the server resets all matches.
+Public internet conditions, different hardware and real mobile devices require field testing.
+
+GRAPHICS / PERFORMANCE
+Procedural low-poly tactical art: textured terrain, valley mountains, forests,
+buildings with open entrances, roads, animated soldiers, muzzle flashes, tracers,
+grenade blasts, drifting particles, shadows, fog, optional rain and generated sound.
+Windows are visual details, not openings: use doors. Roofs are not accessible.
+No parachute phase, inventory drag-and-drop, large map streaming, real terrain
+physics, skeletal motion capture or photorealistic scanned assets.
+Graphics settings change resolution and shadows. Low quality is best on mobile.
+Smoothness depends on browser, GPU and resolution; a universal frame rate is not promised.
+A browser stress-test screenshot is included if present; it is not a performance benchmark.
+
+TESTING
+TEST-RESULTS.txt records the exact automated checks executed for this release.
+Only the listed environment and test cases were verified; internet hosting and all-device
+compatibility are not implied. Three.js is MIT licensed; see THIRD-PARTY-LICENSE.txt.
+No PUBG/Free Fire branding, models, sounds or copyrighted game assets are included.
+
+BUDGET NOTE
+Built without paid media-generation calls. The assistant cannot read, enforce or certify
+Genspark account credit usage; no numeric spending guarantee is made.
